@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
 from flask import Flask, render_template, redirect, url_for, session
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms.fields import RadioField, StringField, SubmitField
-from wtforms.validators import Required
+from wtforms.validators import DataRequired
 from guess import Guess, GuessError
 
 app = Flask(__name__)
@@ -13,16 +13,16 @@ game.expand('Python', 'C++', 'Is it interpreted?', False)
 game.expand('C++', 'Java', 'Does it run on a VM?', True)
 
 
-class YesNoQuestionForm(Form):
+class YesNoQuestionForm(FlaskForm):
     answer = RadioField('Your answer', choices=[('yes', 'Yes'), ('no', 'No')])
     submit = SubmitField('Submit')
 
 
-class LearnForm(Form):
+class LearnForm(FlaskForm):
     language = StringField('What language did you pick?',
-                           validators=[Required()])
+                           validators=[DataRequired()])
     question = StringField('What is a question that differentiates your '
-                           'language from mine?', validators=[Required()])
+                           'language from mine?', validators=[DataRequired()])
     answer = RadioField('What is the answer for your language?',
                         choices=[('yes', 'Yes'), ('no', 'No')])
     submit = SubmitField('Submit')
